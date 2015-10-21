@@ -1,0 +1,96 @@
+Option Explicit On
+Public Class Form1
+    Public Dr As Single, Rd As Single, Er As Single, Re As Single, B As Single
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+    End Sub
+    Private Sub rbDoRu_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbDoRu.CheckedChanged
+        Label3.Text = "$ США"
+        Label5.Text = "руб"
+        TxtKonvert.Text = ""
+        TextBox3.Text = ""
+        TxtKurs.Text = ""
+        TextBox4.Text = ""
+        Lbl.Text = "руб в $"
+        If Dr <> 0 Then
+            TxtKurs.Text = Str(Dr)
+        End If
+    End Sub
+
+    Private Sub rbRuDo_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbRuDo.CheckedChanged
+        Label3.Text = "руб"
+        Label5.Text = "$ США"
+        TxtKonvert.Text = ""
+        TextBox3.Text = ""
+        TxtKurs.Text = ""
+        TextBox4.Text = ""
+        Lbl.Text = "руб в $"
+        If Rd <> 0 Then
+            TxtKurs.Text = Str(Rd)
+        End If
+    End Sub
+
+    Private Sub rbEuRu_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbEuRu.CheckedChanged
+        Label3.Text = "€"
+        Label5.Text = "руб"
+        TxtKonvert.Text = ""
+        TextBox3.Text = ""
+        TxtKurs.Text = ""
+        TextBox4.Text = ""
+        Lbl.Text = "руб в €"
+        If Er <> 0 Then
+            TxtKurs.Text = Str(Er)
+        End If
+    End Sub
+
+    Private Sub rbRuEu_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbRuEu.CheckedChanged
+        Label3.Text = "руб"
+        Label5.Text = "€"
+        TxtKonvert.Text = ""
+        TextBox3.Text = ""
+        TxtKurs.Text = ""
+        TextBox4.Text = ""
+        Lbl.Text = "руб в €"
+        If Re <> 0 Then
+            TxtKurs.Text = Str(Re)
+        End If
+    End Sub
+
+    Private Sub btnConver_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnConver.Click
+        Dim convert As Decimal
+        TextBox3.Text = Val(TxtKonvert.Text)
+        If rbDoRu.Checked = True Or rbEuRu.Checked = True Then
+            convert = Val(TxtKonvert.Text) * Val(TxtKurs.Text)
+            TextBox4.Text = convert
+        End If
+        If rbRuDo.Checked = True Or rbRuEu.Checked = True Then
+            convert = Val(TxtKonvert.Text) / Val(TxtKurs.Text)
+        End If
+        TextBox4.Text = Format((Fix(10 ^ 2 * convert) / 10 ^ 2), ".00")
+        If Val(TxtKonvert.Text) <= 0 Or TxtKonvert.Text = "" Then
+            TextBox3.Text = ""
+            TextBox4.Text = ""
+            MsgBox("Сумма для конвертации не задана или не верна", MsgBoxStyle.Critical, "Ошибка")
+        End If
+        If Val(TxtKurs.Text) <= 0 Or TxtKurs.Text = "" Then
+            TextBox3.Text = ""
+            TextBox4.Text = ""
+            MsgBox("Курс обмена не задан или не верен", MsgBoxStyle.Critical, "Ошибка")
+        End If
+        If rbDoRu.Checked = True Then
+            Dr = Val(TxtKurs.Text)
+        End If
+        If rbRuDo.Checked = True Then
+            Rd = Val(TxtKurs.Text)
+        End If
+        If rbEuRu.Checked = True Then
+            Er = Val(TxtKurs.Text)
+        End If
+        If rbRuEu.Checked = True Then
+            Re = Val(TxtKurs.Text)
+        End If
+    End Sub
+    Private Sub btnClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnClose.Click
+        Me.Close()
+    End Sub
+End Class
